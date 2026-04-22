@@ -1,0 +1,23 @@
+{
+  "name": "bsg",
+  "version": "1.0.0",
+  "description": "Bot de Discord escalable con interacciones, minijuegos, economia y utilidades.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "register": "node src/scripts/registerCommands.js"
+  },
+  "keywords": [
+    "discord",
+    "discord-bot",
+    "bsg",
+    "games",
+    "economy"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^14.19.3",
+    "dotenv": "^16.4.5"
+  }
+}

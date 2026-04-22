@@ -1,1 +1,3 @@
-console.log("¡Hola mundo desde JavaScript!");
+const { startBot } = require("./src/bot/startBot");
+
+startBot();
