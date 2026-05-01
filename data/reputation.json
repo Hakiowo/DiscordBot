@@ -1,0 +1,27 @@
+{
+  "users": {
+    "462068889044516865": {
+      "id": "462068889044516865",
+      "username": "haki.0312",
+      "displayName": "Haki",
+      "points": 0,
+      "received": 0,
+      "given": 1,
+      "lastReason": null,
+      "updatedAt": "2026-05-01T04:36:57.934Z"
+    },
+    "700219932188606474": {
+      "id": "700219932188606474",
+      "username": "__yohann",
+      "displayName": "Yohan",
+      "points": 1,
+      "received": 1,
+      "given": 0,
+      "lastReason": "Sin motivo especifico.",
+      "updatedAt": "2026-05-01T04:36:57.934Z"
+    }
+  },
+  "grants": {
+    "462068889044516865:700219932188606474": "2026-05-01T04:36:57.934Z"
+  }
+}

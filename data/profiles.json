@@ -1,0 +1,112 @@
+{
+  "users": {
+    "462068889044516865": {
+      "id": "462068889044516865",
+      "username": "haki.0312",
+      "displayName": "Haki",
+      "sent": {
+        "hug": 3,
+        "slap": 0,
+        "pat": 7,
+        "kiss": 0,
+        "cuddle": 1,
+        "poke": 0,
+        "feed": 0,
+        "bite": 0,
+        "punch": 1,
+        "bonk": 0,
+        "handhold": 0
+      },
+      "received": {
+        "hug": 0,
+        "slap": 0,
+        "pat": 0,
+        "kiss": 0,
+        "cuddle": 0,
+        "poke": 0,
+        "feed": 0,
+        "bite": 0,
+        "punch": 0,
+        "bonk": 0,
+        "handhold": 0
+      },
+      "totals": {
+        "sent": 12,
+        "received": 0
+      },
+      "updatedAt": "2026-05-01T04:16:18.693Z"
+    },
+    "1199823021154766860": {
+      "id": "1199823021154766860",
+      "username": "haki_owo",
+      "displayName": "Haki",
+      "sent": {
+        "hug": 0,
+        "slap": 0,
+        "pat": 0,
+        "kiss": 0,
+        "cuddle": 0,
+        "poke": 0,
+        "feed": 0,
+        "bite": 0,
+        "punch": 0,
+        "bonk": 0,
+        "handhold": 0
+      },
+      "received": {
+        "hug": 1,
+        "slap": 0,
+        "pat": 7,
+        "kiss": 0,
+        "cuddle": 0,
+        "poke": 0,
+        "feed": 0,
+        "bite": 0,
+        "punch": 1,
+        "bonk": 0,
+        "handhold": 0
+      },
+      "totals": {
+        "sent": 0,
+        "received": 9
+      },
+      "updatedAt": "2026-04-22T04:49:46.126Z"
+    },
+    "700219932188606474": {
+      "id": "700219932188606474",
+      "username": "__yohann",
+      "displayName": "Yohan",
+      "sent": {
+        "hug": 0,
+        "slap": 0,
+        "pat": 0,
+        "kiss": 0,
+        "cuddle": 0,
+        "poke": 0,
+        "feed": 0,
+        "bite": 0,
+        "punch": 0,
+        "bonk": 0,
+        "handhold": 0
+      },
+      "received": {
+        "hug": 2,
+        "slap": 0,
+        "pat": 0,
+        "kiss": 0,
+        "cuddle": 1,
+        "poke": 0,
+        "feed": 0,
+        "bite": 0,
+        "punch": 0,
+        "bonk": 0,
+        "handhold": 0
+      },
+      "totals": {
+        "sent": 0,
+        "received": 3
+      },
+      "updatedAt": "2026-05-01T04:16:18.693Z"
+    }
+  }
+}

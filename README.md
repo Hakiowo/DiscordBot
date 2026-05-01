@@ -2,7 +2,7 @@
 
 BSG es un bot de Discord pensado para ofrecer interacciones entre usuarios, minijuegos y distintas utilidades dentro de un servidor. El proyecto está planteado con una arquitectura escalable para permitir la incorporación de nuevas funciones a futuro sin comprometer su crecimiento.
 
-Actualmente el repositorio ya cuenta con una base inicial en `Node.js` y `discord.js`, preparada para crecer por modulos y categorias.
+Actualmente el repositorio ya cuenta con una base inicial en `Node.js` y `discord.js`, preparada para crecer por modulos y categorias, junto con un primer sistema funcional de interacciones sociales con persistencia local.
 
 ## Objetivo del proyecto
 
@@ -46,7 +46,8 @@ El proyecto se encuentra en una fase temprana de desarrollo, pero ya incluye una
 - Sistema de carga dinamica de eventos.
 - Configuracion mediante variables de entorno.
 - Script para registrar comandos slash.
-- Comandos iniciales de ejemplo.
+- Persistencia local en JSON para perfiles e interacciones.
+- Comandos iniciales de ejemplo y primer modulo social.
 
 ## Tecnologias
 
@@ -132,6 +133,19 @@ Actualmente BSG ya incluye:
 - Manejo base de `interactionCreate`.
 - Comando `/ping`.
 - Comando `/avatar`.
+- Comandos sociales `/hug`, `/pat`, `/kiss`, `/cuddle`, `/poke`, `/feed`, `/bite`, `/slap`, `/punch`, `/bonk` y `/handhold`.
+- Comando `/profile` con estadisticas de interaccion.
+- Comando `/topinteractions` con ranking de actividad.
+- Comando `/8ball` con respuestas creativas y recompensa en Genial Coins.
+- Comando `/hungergames` con simulacion por dias, eliminaciones y recompensa al ganador.
+- Sistema de economia con balance, daily, tienda y compras.
+- Sistema de reputacion con `/rep` y ranking `/toprep`.
+- Misiones diarias y semanales con `/missions`.
+- Eventos aleatorios con recompensas al usar comandos de actividad.
+- Estructura reservada para un futuro sistema de cartas coleccionables.
+- Comando `/help` con listado de comandos y descripciones.
+- GIFs SFW por interaccion con fallback local si la API externa falla.
+- Persistencia local de perfiles en `data/profiles.json`.
 
 ## Roadmap inicial
 

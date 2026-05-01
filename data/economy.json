@@ -1,0 +1,15 @@
+{
+  "users": {
+    "462068889044516865": {
+      "id": "462068889044516865",
+      "username": "haki.0312",
+      "displayName": "Haki",
+      "balance": 149,
+      "earned": 149,
+      "spent": 0,
+      "inventory": {},
+      "lastDailyAt": "2026-05-01T04:24:50.816Z",
+      "updatedAt": "2026-05-01T05:10:36.284Z"
+    }
+  }
+}
