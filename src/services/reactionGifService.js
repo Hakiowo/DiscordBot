@@ -4,6 +4,7 @@ const API_BASE_URL = "https://nekos.best/api/v2";
 const REQUEST_HEADERS = {
   "User-Agent": "BSG/1.0 (https://discord.com)"
 };
+const REQUEST_TIMEOUT_MS = 5000;
 
 function requestJson(url) {
   return new Promise((resolve, reject) => {
@@ -34,6 +35,9 @@ function requestJson(url) {
       }
     );
 
+    request.setTimeout(REQUEST_TIMEOUT_MS, () => {
+      request.destroy(new Error(`Tiempo de espera agotado despues de ${REQUEST_TIMEOUT_MS} ms`));
+    });
     request.on("error", reject);
   });
 }

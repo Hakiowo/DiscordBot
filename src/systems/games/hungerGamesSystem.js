@@ -18,58 +18,73 @@ const CUSTOM_ID_CANCEL = "hungergames:cancel";
 
 let activeGame = null;
 
-const DAY_OPENINGS = [
-  "Amanece con poca visibilidad. Los tributos se mueven con cuidado y evitan hacer ruido.",
-  "La arena cambia durante la noche. Los caminos seguros de ayer ya no parecen tan confiables.",
-  "El cansancio empieza a pesar. Cada decision pequena puede terminar separando a los fuertes de los distraidos.",
+const DESCRIPTIVE_DAY_OPENINGS = [
+  "Amanece con poca visibilidad. Los tributos avanzan despacio y escuchan cada movimiento.",
+  "La arena cambio durante la noche. Los caminos seguros de ayer ya no parecen confiables.",
+  "El cansancio empieza a pesar. Una mala decision puede decidir quien sigue en pie.",
   "Los recursos escasean. Nadie quiere gastar energia, pero quedarse quieto tambien es peligroso.",
-  "El dia empieza tenso. Los sobrevivientes saben que cada encuentro puede cambiar la partida."
+  "El dia empieza tenso. Cada encuentro puede cambiar la partida."
 ];
 
-const SURVIVAL_EVENTS = [
-  "{a} encuentra agua y decide esconder parte para la noche.",
-  "{a} revisa un campamento abandonado y rescata suministros utiles.",
-  "{a} evita una zona abierta y gana tiempo para recuperarse.",
-  "{a} prepara un refugio simple antes de que caiga la tarde.",
-  "{a} sigue huellas recientes, pero decide no arriesgarse todavia.",
-  "{a} encuentra comida suficiente para resistir un dia mas.",
-  "{a} cambia de ruta al notar que alguien ya paso por ahi.",
-  "{a} cubre sus rastros y se aleja del centro de la arena."
+const DESCRIPTIVE_SURVIVAL_EVENTS = [
+  "{a} encuentra agua en una grieta y guarda parte para pasar la noche.",
+  "{a} revisa un campamento abandonado y rescata vendas, cuerda y algo de comida.",
+  "{a} evita una zona abierta al ver reflejos entre los arboles y gana tiempo para recuperarse.",
+  "{a} arma un refugio bajo raices antes de que la lluvia deje huellas faciles de seguir.",
+  "{a} sigue huellas recientes, pero se retira al notar que terminan en una emboscada.",
+  "{a} encuentra comida suficiente para resistir un dia mas y la esconde lejos de su refugio.",
+  "{a} cambia de ruta al encontrar ramas cortadas demasiado limpias para ser casualidad.",
+  "{a} cubre sus rastros con barro y hojas antes de moverse hacia una zona mas alta.",
+  "{a} fabrica una lanza improvisada y la prueba contra un tronco antes de seguir.",
+  "{a} apaga un fuego ajeno para confundir a quien estuviera siguiendo el humo."
 ];
 
-const TENSION_EVENTS = [
-  "{a} ve a {b} a lo lejos, pero ninguno quiere iniciar una pelea sin ventaja.",
-  "{a} y {b} comparten unos minutos de tregua antes de separarse en silencio.",
-  "{a} intenta seguir a {b}, pero pierde el rastro cerca de una zona rocosa.",
-  "{a} le roba suministros menores a {b} y desaparece antes de ser descubierto.",
-  "{a} y {b} llegan al mismo escondite. La tension sube, pero ambos retroceden.",
-  "{a} distrae a {b} con ruido falso y aprovecha para cambiar de posicion.",
-  "{a} obliga a {b} a abandonar una ruta segura.",
-  "{a} sospecha que {b} le tendio una trampa y decide rodear el area."
+const DESCRIPTIVE_TENSION_EVENTS = [
+  "{a} ve a {b} a lo lejos, apunta con cuidado y decide no pelear sin ventaja.",
+  "{a} y {b} comparten una tregua corta para cruzar una zona inundada antes de separarse.",
+  "{a} intenta seguir a {b}, pero pierde el rastro entre piedras sueltas y marcas falsas.",
+  "{a} roba una bolsa pequena de {b} y desaparece antes de que pueda alcanzarlo.",
+  "{a} y {b} llegan al mismo escondite. Ambos se amenazan, pero retroceden al oir pasos cerca.",
+  "{a} distrae a {b} lanzando piedras hacia otra ruta y aprovecha para cambiar de posicion.",
+  "{a} obliga a {b} a abandonar un sendero seguro bloqueando la salida con ramas secas.",
+  "{a} sospecha que {b} preparo una trampa y rodea el area durante casi una hora.",
+  "{a} persigue a {b} hasta un arroyo, pero pierde la oportunidad cuando el terreno se vuelve resbaloso.",
+  "{a} negocia con {b} intercambiar informacion falsa por comida y ambos se van desconfiando."
 ];
 
-const ELIMINATION_EVENTS = [
-  "{a} intenta recuperar suministros en una zona expuesta. {b} aprovecha la distraccion y lo elimina.",
-  "{a} fuerza una pelea sin energia suficiente. {b} resiste mejor y lo deja fuera.",
-  "{a} cae en una trampa cerca de un refugio abandonado y no logra escapar.",
-  "{a} se separa demasiado del grupo de sobrevivientes y queda atrapado por la arena.",
-  "{a} toma una ruta inestable para evitar a {b}, pero el desvio termina costandole la partida.",
-  "{a} intenta cruzar una zona peligrosa antes del anochecer y queda eliminado.",
-  "{a} pierde sus suministros, se arriesga a recuperarlos y termina fuera del juego.",
-  "{a} baja la guardia creyendo que estaba solo. {b} estaba mas cerca de lo que parecia.",
-  "{a} entra en un refugio sin revisar la salida. Cuando intenta huir, ya es tarde.",
-  "{a} queda agotado despues de una persecucion y no puede seguir compitiendo."
+const DESCRIPTIVE_ELIMINATION_EVENTS = [
+  "{a} intenta recuperar suministros en una zona expuesta; activa una alarma improvisada y cae antes de escapar.",
+  "{a} fuerza una pelea sin energia, falla el primer golpe y queda fuera del juego.",
+  "{a} cae en una trampa cerca de un refugio abandonado y no logra soltarse antes de que la arena lo cierre.",
+  "{a} se separa demasiado buscando agua y queda atrapado cuando el terreno empieza a hundirse.",
+  "{a} toma una ruta inestable por un barranco; el desvio rapido termina costandole la partida.",
+  "{a} cruza una zona peligrosa antes del anochecer, pisa una cuerda oculta y queda eliminado.",
+  "{a} pierde sus suministros, vuelve por ellos con prisa y entra directo en una zona vigilada.",
+  "{a} baja la guardia creyendo que estaba solo y desaparece entre la niebla sin poder pedir ayuda.",
+  "{a} entra en un refugio sin revisar la salida. Cuando intenta huir, el paso ya esta bloqueado.",
+  "{a} queda agotado despues de una persecucion y no puede defenderse cuando la arena lo alcanza."
 ];
 
-const FINAL_EVENTS = [
-  "{a} espera a que {b} cometa el primer error y gana el ultimo enfrentamiento.",
-  "{a} guarda fuerzas durante el dia y supera a {b} cuando la arena se cierra.",
-  "{a} usa mejor los ultimos suministros y deja a {b} sin opciones.",
-  "{a} convierte el terreno en ventaja y derrota a {b} en el cierre.",
-  "{a} mantiene la calma en el duelo final y elimina a {b}."
+const DESCRIPTIVE_KILL_EVENTS = [
+  "{a} espera a que {b} revise una mochila falsa y lo elimina cuando queda expuesto.",
+  "{a} acorrala a {b} contra una zona sin salida y gana el forcejeo con una lanza improvisada.",
+  "{a} sigue a {b} durante horas, corta su unica ruta de escape y lo deja fuera del juego.",
+  "{a} usa humo para obligar a {b} a moverse y lo elimina al salir de su escondite.",
+  "{a} finge retirarse, atrae a {b} hasta una cuerda oculta y aprovecha la caida para eliminarlo.",
+  "{a} sorprende a {b} mientras bebe agua y termina el enfrentamiento antes de que pueda reaccionar.",
+  "{a} roba el arma de {b} durante un descuido y lo elimina despues de una pelea corta.",
+  "{a} empuja a {b} hacia una zona abierta y lo deja sin cobertura cuando la arena se cierra."
 ];
 
-const DAY_CLOSINGS = [
+const DESCRIPTIVE_FINAL_EVENTS = [
+  "{a} espera a que {b} cometa el primer error, le corta la retirada y gana el ultimo enfrentamiento.",
+  "{a} guarda fuerzas durante el dia y supera a {b} cuando la arena los obliga a chocar.",
+  "{a} usa mejor los ultimos suministros, deja a {b} sin agua y lo derrota en el cierre.",
+  "{a} convierte el terreno en ventaja, obliga a {b} a subir una pendiente y gana desde arriba.",
+  "{a} mantiene la calma en el duelo final, esquiva el ataque de {b} y lo elimina."
+];
+
+const DESCRIPTIVE_DAY_CLOSINGS = [
   "Cae la noche. Los sobrevivientes se esconden y cuentan lo poco que les queda.",
   "La arena queda en silencio por unos minutos. Nadie sabe quien se movera primero manana.",
   "El dia termina con menos nombres en pie y mas miedo entre los que quedan.",
@@ -162,6 +177,14 @@ function shuffle(items) {
   return [...items].sort(() => Math.random() - 0.5);
 }
 
+function removePlayer(players, playerToRemove) {
+  const index = players.findIndex((player) => player === playerToRemove);
+
+  if (index >= 0) {
+    players.splice(index, 1);
+  }
+}
+
 function formatTemplate(template, participants) {
   return template
     .replace("{a}", participants[0]?.name || "Alguien")
@@ -197,41 +220,53 @@ function createControlRow(disabled = false) {
 
 function createDayEvents(game) {
   const alivePlayers = getAlivePlayers(game);
-  const events = [pickRandom(DAY_OPENINGS)];
+  const events = [pickRandom(DESCRIPTIVE_DAY_OPENINGS)];
   const shuffledAlivePlayers = shuffle(alivePlayers);
-  const survivalEventCount = Math.min(Math.max(1, Math.floor(alivePlayers.length / 4)), 3);
+  const eliminationCount = Math.max(1, Math.min(Math.ceil(alivePlayers.length / 5), alivePlayers.length - 1));
+  const eliminatedPlayers = shuffledAlivePlayers.slice(0, eliminationCount);
+  const survivors = shuffledAlivePlayers.slice(eliminationCount);
+  const playersWithoutAction = [...survivors];
 
-  for (let index = 0; index < survivalEventCount; index += 1) {
-    const firstPlayer = shuffledAlivePlayers[index % shuffledAlivePlayers.length];
-    events.push(formatTemplate(pickRandom(SURVIVAL_EVENTS), [firstPlayer]));
-  }
-
-  if (alivePlayers.length > 2) {
-    const tensionEventCount = Math.min(Math.max(1, Math.floor(alivePlayers.length / 5)), 2);
-
-    for (let index = 0; index < tensionEventCount; index += 1) {
-      const firstPlayer = shuffledAlivePlayers[(index + survivalEventCount) % shuffledAlivePlayers.length];
-      const secondPlayer = shuffledAlivePlayers[(index + survivalEventCount + 1) % shuffledAlivePlayers.length];
-      events.push(formatTemplate(pickRandom(TENSION_EVENTS), [firstPlayer, secondPlayer]));
-    }
-  }
-
-  const refreshedAlivePlayers = shuffle(getAlivePlayers(game));
-  const eliminationCount = Math.max(1, Math.min(Math.ceil(refreshedAlivePlayers.length / 5), refreshedAlivePlayers.length - 1));
-  const eliminatedPlayers = refreshedAlivePlayers.slice(0, eliminationCount);
-
-  for (const eliminatedPlayer of eliminatedPlayers) {
-    const possibleWitnesses = refreshedAlivePlayers.filter((player) => player.name !== eliminatedPlayer.name);
-    const witness = pickRandom(possibleWitnesses) || null;
-    const isFinalDuel = getAlivePlayers(game).length === 2;
-    const template = isFinalDuel ? pickRandom(FINAL_EVENTS) : pickRandom(ELIMINATION_EVENTS);
+  if (alivePlayers.length === 2) {
+    const eliminatedPlayer = eliminatedPlayers[0];
+    const winner = survivors[0];
 
     eliminatedPlayer.alive = false;
     eliminatedPlayer.eliminatedDay = game.day;
-    events.push(formatTemplate(template, isFinalDuel ? [witness, eliminatedPlayer] : [eliminatedPlayer, witness]));
+    events.push(formatTemplate(pickRandom(DESCRIPTIVE_FINAL_EVENTS), [winner, eliminatedPlayer]));
+    events.push(`${pickRandom(DESCRIPTIVE_DAY_CLOSINGS)} ${formatAliveCount(getAlivePlayers(game).length)}`);
+
+    return events;
   }
 
-  events.push(`${pickRandom(DAY_CLOSINGS)} ${formatAliveCount(getAlivePlayers(game).length)}`);
+  for (const eliminatedPlayer of eliminatedPlayers) {
+    const attacker = survivors.length && Math.random() < 0.65 ? pickRandom(survivors) : null;
+
+    eliminatedPlayer.alive = false;
+    eliminatedPlayer.eliminatedDay = game.day;
+
+    if (attacker) {
+      removePlayer(playersWithoutAction, attacker);
+      events.push(formatTemplate(pickRandom(DESCRIPTIVE_KILL_EVENTS), [attacker, eliminatedPlayer]));
+      continue;
+    }
+
+    events.push(formatTemplate(pickRandom(DESCRIPTIVE_ELIMINATION_EVENTS), [eliminatedPlayer]));
+  }
+
+  const pendingPlayers = shuffle(playersWithoutAction);
+
+  while (pendingPlayers.length >= 2) {
+    const firstPlayer = pendingPlayers.shift();
+    const secondPlayer = pendingPlayers.shift();
+    events.push(formatTemplate(pickRandom(DESCRIPTIVE_TENSION_EVENTS), [firstPlayer, secondPlayer]));
+  }
+
+  if (pendingPlayers.length) {
+    events.push(formatTemplate(pickRandom(DESCRIPTIVE_SURVIVAL_EVENTS), [pendingPlayers.shift()]));
+  }
+
+  events.push(`${pickRandom(DESCRIPTIVE_DAY_CLOSINGS)} ${formatAliveCount(getAlivePlayers(game).length)}`);
 
   return events;
 }
@@ -257,29 +292,29 @@ async function buildGameEmbed(game, events, rewardText = null) {
   const deadPlayers = getDeadPlayers(game);
   const embed = new EmbedBuilder()
     .setColor(alivePlayers.length === 1 ? 0xf9c74f : 0xb56576)
-    .setTitle(`Hunger Games - Dia ${game.day}`)
+    .setTitle(`🏹 Hunger Games - Dia ${game.day}`)
     .setDescription(events.map((event) => `- ${event}`).join("\n"))
     .addFields(
       {
-        name: "Siguen en pie",
+        name: "🛡️ Siguen en pie",
         value: alivePlayers.map((player) => player.name).join(", ") || "Nadie"
       },
       {
-        name: "Eliminados",
+        name: "☠️ Eliminados",
         value: deadPlayers.map((player) => player.name).join(", ") || "Nadie"
       }
     );
 
   if (alivePlayers.length === 1) {
-    embed.setTitle("Hunger Games - Ganador");
+    embed.setTitle("🏆 Hunger Games - Ganador");
     embed.addFields({
-      name: "Victoria",
+      name: "👑 Victoria",
       value: `${alivePlayers[0].name} gana la partida.`
     });
 
     if (rewardText) {
       embed.addFields({
-        name: "Recompensa",
+        name: "🪙 Recompensa",
         value: rewardText
       });
     }

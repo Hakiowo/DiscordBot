@@ -136,7 +136,7 @@ Actualmente BSG ya incluye:
 - Comandos sociales `/hug`, `/pat`, `/kiss`, `/cuddle`, `/poke`, `/feed`, `/bite`, `/slap`, `/punch`, `/bonk` y `/handhold`.
 - Comando `/profile` con estadisticas de interaccion.
 - Comando `/topinteractions` con ranking de actividad.
-- Comando `/8ball` con respuestas creativas y recompensa en Genial Coins.
+- Comando `/8ball` con respuestas creativas y recompensa en Haki Coins.
 - Comando `/hungergames` con simulacion por dias, eliminaciones y recompensa al ganador.
 - Sistema de economia con balance, daily, tienda y compras.
 - Sistema de reputacion con `/rep` y ranking `/toprep`.

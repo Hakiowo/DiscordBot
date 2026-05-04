@@ -15,7 +15,7 @@ const EVENTS = [
     amount: 12
   },
   {
-    text: "La tienda Genial te dio cashback por existir.",
+    text: "La tienda Haki te dio cashback por existir.",
     amount: 15
   },
   {

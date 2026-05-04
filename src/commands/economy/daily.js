@@ -7,12 +7,13 @@ const {
 } = require("../../systems/economy/economySystem");
 const { recordMissionEvent } = require("../../systems/missions/missionSystem");
 const { rollRandomEventField } = require("../../systems/randomEvents/randomEventSystem");
+const { grantHakiPassRole } = require("../../utils/grantHakiPassRole");
 
 module.exports = {
   category: COMMAND_CATEGORIES.ECONOMY,
   data: new SlashCommandBuilder()
     .setName("daily")
-    .setDescription("Reclama tu recompensa diaria de Genial Coins."),
+    .setDescription("Reclama tu recompensa diaria de Haki Coins."),
   async execute(interaction) {
     const result = await claimDaily(interaction.user);
 
@@ -26,12 +27,28 @@ module.exports = {
 
     await recordMissionEvent(interaction.user, "daily");
     const eventField = await rollRandomEventField(interaction.user);
+    const roleResult = result.bonusItem ? await grantHakiPassRole(interaction) : null;
     const embed = new EmbedBuilder()
       .setColor(0x43aa8b)
       .setTitle("Daily reclamado")
       .setDescription(
         `Recibiste ${formatCurrency(result.reward)}.\nBalance actual: ${formatCurrency(result.wallet.balance)}.`
       );
+
+    if (result.bonusItem) {
+      embed
+        .setColor(0xf9c74f)
+        .addFields({
+          name: "*** HakiPass desbloqueado ***",
+          value: [
+            "Felicidades obtuviste el HakiPass.",
+            "No hace nada pero ahi tienes.",
+            roleResult?.granted
+              ? `Rol otorgado: ${roleResult.role}`
+              : "No pude otorgar el rol HakiPass. Revisa permisos y jerarquia de roles."
+          ].join("\n")
+        });
+    }
 
     if (eventField) {
       embed.addFields(eventField);

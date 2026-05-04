@@ -1,3 +1,5 @@
+const BOT_PREFIX = "/";
+
 const COMMAND_CATEGORIES = Object.freeze({
   ADMIN: "admin",
   ECONOMY: "economy",
@@ -7,4 +9,4 @@ const COMMAND_CATEGORIES = Object.freeze({
   UTILITY: "utility"
 });
 
-module.exports = { COMMAND_CATEGORIES };
+module.exports = { BOT_PREFIX, COMMAND_CATEGORIES };

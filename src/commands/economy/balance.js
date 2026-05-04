@@ -23,7 +23,7 @@ module.exports = {
   category: COMMAND_CATEGORIES.ECONOMY,
   data: new SlashCommandBuilder()
     .setName("balance")
-    .setDescription("Consulta tus Genial Coins o las de otro usuario.")
+    .setDescription("Consulta tus Haki Coins o las de otro usuario.")
     .addUserOption((option) =>
       option
         .setName("usuario")

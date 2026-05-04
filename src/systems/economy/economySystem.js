@@ -4,15 +4,24 @@ const { readJsonFile, updateJsonFile } = require("../../services/jsonStorage");
 const economyFilePath = path.join(__dirname, "..", "..", "..", "data", "economy.json");
 const defaultEconomyData = { users: {} };
 
-const CURRENCY_NAME = "Genial Coin";
-const CURRENCY_NAME_PLURAL = "Genial Coins";
+const CURRENCY_NAME = "Haki Coin";
+const CURRENCY_NAME_PLURAL = "Haki Coins";
 const DAILY_REWARD = 125;
+const DAILY_HAKI_PASS_CHANCE = 0.08;
 const DAILY_COOLDOWN_MS = 24 * 60 * 60 * 1000;
 const INTERACTION_REWARD = 3;
 const EIGHT_BALL_REWARD = 8;
 const HUNGER_GAMES_WIN_REWARD = 175;
+const SLOTS_PLAY_COST = 30;
+const HAKI_PASS_ITEM_ID = "haki_pass";
 
 const SHOP_ITEMS = Object.freeze([
+  {
+    id: HAKI_PASS_ITEM_ID,
+    name: "HakiPass",
+    price: 2000,
+    description: "No hace nada, pero ahi tienes. Incluye el rol HakiPass si el bot puede asignarlo."
+  },
   {
     id: "brillo",
     name: "Brillo de perfil",
@@ -27,7 +36,7 @@ const SHOP_ITEMS = Object.freeze([
   },
   {
     id: "corona",
-    name: "Corona genial",
+    name: "Corona haki",
     price: 1200,
     description: "Un simbolo caro, simple y directo."
   }
@@ -118,6 +127,79 @@ async function addCoins(user, amount) {
   return updatedData.users[user.id];
 }
 
+async function spendCoins(user, amount) {
+  let result = null;
+
+  await updateJsonFile(economyFilePath, defaultEconomyData, (data) => {
+    const nextData = {
+      users: {
+        ...data.users
+      }
+    };
+
+    const wallet = ensureWalletShape(nextData.users[user.id], user);
+
+    if (wallet.balance < amount) {
+      result = {
+        spent: false,
+        wallet
+      };
+      nextData.users[user.id] = wallet;
+      return nextData;
+    }
+
+    wallet.balance -= amount;
+    wallet.spent += amount;
+    wallet.updatedAt = new Date().toISOString();
+    nextData.users[user.id] = wallet;
+
+    result = {
+      spent: true,
+      wallet
+    };
+
+    return nextData;
+  });
+
+  return result;
+}
+
+async function adjustCoins(user, amount) {
+  let result = null;
+
+  await updateJsonFile(economyFilePath, defaultEconomyData, (data) => {
+    const nextData = {
+      users: {
+        ...data.users
+      }
+    };
+
+    const wallet = ensureWalletShape(nextData.users[user.id], user);
+    const previousBalance = wallet.balance;
+    const nextBalance = Math.max(wallet.balance + amount, 0);
+    const appliedAmount = nextBalance - previousBalance;
+
+    wallet.balance = nextBalance;
+
+    if (appliedAmount > 0) {
+      wallet.earned += appliedAmount;
+    }
+
+    wallet.updatedAt = new Date().toISOString();
+    nextData.users[user.id] = wallet;
+
+    result = {
+      appliedAmount,
+      previousBalance,
+      wallet
+    };
+
+    return nextData;
+  });
+
+  return result;
+}
+
 async function claimDaily(user) {
   let result = null;
 
@@ -143,6 +225,12 @@ async function claimDaily(user) {
 
     wallet.balance += DAILY_REWARD;
     wallet.earned += DAILY_REWARD;
+    const bonusItem = Math.random() < DAILY_HAKI_PASS_CHANCE ? getShopItem(HAKI_PASS_ITEM_ID) : null;
+
+    if (bonusItem) {
+      wallet.inventory[bonusItem.id] = (wallet.inventory[bonusItem.id] || 0) + 1;
+    }
+
     wallet.lastDailyAt = new Date().toISOString();
     wallet.updatedAt = new Date().toISOString();
     nextData.users[user.id] = wallet;
@@ -150,6 +238,7 @@ async function claimDaily(user) {
     result = {
       claimed: true,
       reward: DAILY_REWARD,
+      bonusItem,
       wallet
     };
 
@@ -159,6 +248,7 @@ async function claimDaily(user) {
   return result || {
     claimed: true,
     reward: DAILY_REWARD,
+    bonusItem: null,
     wallet: updatedData.users[user.id]
   };
 }
@@ -224,15 +314,20 @@ async function buyItem(user, itemId) {
 module.exports = {
   CURRENCY_NAME,
   CURRENCY_NAME_PLURAL,
+  DAILY_HAKI_PASS_CHANCE,
   DAILY_REWARD,
   EIGHT_BALL_REWARD,
+  HAKI_PASS_ITEM_ID,
   HUNGER_GAMES_WIN_REWARD,
   INTERACTION_REWARD,
+  SLOTS_PLAY_COST,
   addCoins,
+  adjustCoins,
   buyItem,
   claimDaily,
   formatCurrency,
   formatDuration,
   getShopItems,
-  getWallet
+  getWallet,
+  spendCoins
 };

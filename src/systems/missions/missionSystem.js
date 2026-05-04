@@ -36,7 +36,7 @@ const MISSION_DEFINITIONS = Object.freeze([
   {
     id: "weekly_daily",
     period: "weekly",
-    title: "Constancia genial",
+    title: "Constancia haki",
     description: "Reclama /daily 5 veces.",
     goal: 5,
     reward: 250,
@@ -49,7 +49,7 @@ const MISSION_DEFINITIONS = Object.freeze([
     description: "Completa 15 acciones sociales o divertidas.",
     goal: 15,
     reward: 300,
-    eventTypes: ["interaction", "8ball", "rep", "hungergames"]
+    eventTypes: ["interaction", "8ball", "rep", "hungergames", "slots"]
   }
 ]);
 

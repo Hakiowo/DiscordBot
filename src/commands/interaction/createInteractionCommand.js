@@ -19,7 +19,7 @@ function createInteractionCommand(definition, { getInteractionGif, recordInterac
           .setName("usuario")
           .setDescription("Usuario con el que quieres interactuar.")
           .setRequired(true)
-      ),
+    ),
     async execute(interaction) {
       const targetUser = interaction.options.getUser("usuario");
 
@@ -56,7 +56,9 @@ function createInteractionCommand(definition, { getInteractionGif, recordInterac
       await recordMissionEvent(interaction.user, "interaction");
       const eventField = await rollRandomEventField(interaction.user);
 
-      const gifUrl = await getInteractionGif(definition);
+      const interactionImage = await getInteractionGif(definition);
+      const gifUrl = typeof interactionImage === "string" ? interactionImage : interactionImage?.url;
+      const files = typeof interactionImage === "object" && interactionImage?.files ? interactionImage.files : [];
       const embed = new EmbedBuilder()
         .setColor(definition.color)
         .setDescription(
@@ -71,7 +73,14 @@ function createInteractionCommand(definition, { getInteractionGif, recordInterac
         embed.addFields(eventField);
       }
 
-      await interaction.reply({ embeds: [embed] });
+      await interaction.reply({
+        content: `${targetUser}`,
+        embeds: [embed],
+        files,
+        allowedMentions: {
+          users: [targetUser.id]
+        }
+      });
     }
   };
 }
